@@ -25,9 +25,9 @@ var predict = function(dayWeather) {
 /**
  * 
  * @param {array} weatherHist The previous 30 days' weather, oldest at 0
- * @param {array} energyHist The previous 30 days' energy production, oldest at 0
+ * @param {object array} energyHist The previous 30 days' dates and energy production, oldest at 0
  */
-var correlateEnergyProduction = function(weatherHist, energyHist) {
+var correlateProduction = function(weatherHist, energyHist) {
     /* TO BE MODIFIED BASED ON API USED FOR WEATHER */
 
     //Create variables for averaging energy based on weather
@@ -41,11 +41,11 @@ var correlateEnergyProduction = function(weatherHist, energyHist) {
         switch (weatherHist[i]) {
             case "sunny":
                 numSun++;
-                genSun += energyHist[i];
+                genSun += energyHist[i].powerGenerated;
                 break;
             case "partiallySunny":
                 numPSun++;
-                genPSun += energyHist[i];
+                genPSun += energyHist[i].powerGenerated;
                 break;
             //etc
         }
