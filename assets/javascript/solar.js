@@ -11,14 +11,14 @@ var apiKey = "Z9OV01B8GW40QM4DE8N1NM11M33S83MG";
 function buildURL(siteID, command) {
 
     var rslt = "https://cors-anywhere.herokuapp.com/https://monitoringapi.solaredge.com/site/" + siteID + "/" + command + "api_key=" + apiKey;
-    console.log(rslt);
+    //console.log(rslt);
     return rslt;
 }
 
 
 // GET SITE INFORMATION
 // -------------------------------------------------------------------------------------------
-function getSiteInfo(siteID) {
+function getSiteInfo(siteID, callback) {
 
     var rslt = {
         zip:"",
@@ -33,7 +33,7 @@ function getSiteInfo(siteID) {
       method: "GET"
     }).then(function(response) {  
 
-        console.log(response);
+        //console.log(response);
         rslt.zip = response.details.location.zip;
 
 
@@ -44,14 +44,15 @@ function getSiteInfo(siteID) {
             method: "GET"
           }).then(function(response) {  
       
-              console.log(response);
+              // console.log(response);
       
               rslt.lastUpdateTime =  response.overview.lastUpdateTime;
               rslt.currentPower   =  response.overview.currentPower.power;
+              // rslt.address = 
 
               console.log(rslt);
 
-              return rslt;
+              callback(rslt);
           });
     });
 }
@@ -59,7 +60,7 @@ function getSiteInfo(siteID) {
 
 // GET PRODUCTION HISTORY
 // -------------------------------------------------------------------------------------------
-function getProductionHistory(siteID, startDateUnix, endDateUnix) {
+function getProductionHistory(siteID, startDateUnix, endDateUnix , callback) {
 
     var rslt = [];
     var singleDayInfo = {
@@ -82,7 +83,7 @@ function getProductionHistory(siteID, startDateUnix, endDateUnix) {
       method: "GET"
     }).then(function(response) {  
 
-        console.log(response);
+       // console.log(response);
 
         for(let i=0; i<response.energy.values.length; i++)
         {
@@ -96,8 +97,9 @@ function getProductionHistory(siteID, startDateUnix, endDateUnix) {
                         powerGenerated : response.energy.values[i].value });
 
         }
-        console.log(rslt);
-        return rslt;
-    });    
+        //console.log("From ajax call " + rslt);
+        callback(rslt);
+        
+    }); 
 
 }
