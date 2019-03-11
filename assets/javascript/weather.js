@@ -1,9 +1,11 @@
 showWeather("1600 Amphitheatre Parkway, Mountain View,California","","", function(res1){
-});
+    //console.log(res1);
+},true);
 
 //START - Google Maps API
-//get latitude and longitude base on address 
-function showWeather(address, startDate, endDate, callback) {
+//get latitude and longitude base on address
+//isFuture: either true(if future) or false(if history)
+function showWeather(address, startDate, endDate, callback, isFuture) {
     var res = [];
     var latLong = [];
     var apiKey = "AIzaSyDs3kB9GH643iw3aYL1egJilXsG0L39HFo";
@@ -12,16 +14,13 @@ function showWeather(address, startDate, endDate, callback) {
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        //console.log(response);
         latLong = [response.results[0].geometry.location.lat, response.results[0].geometry.location.lng];
         //res = runShowWeatherByDate(latLong, startDate, endDate, callback);
-        res[0] = showWeatherFuture(latLong, callback);
-        res[1] = showWeatherHistory(latLong, callback);
+        if (isFuture) {showWeatherFuture(latLong, callback);}
+        else {showWeatherHistory(latLong, callback);}
     });
-    return res;
 }
 //END - Google Maps API
-
 
 //function to run weather by date
 function runShowWeatherByDate(latLong, startDate, endDate, callback) {
@@ -35,15 +34,16 @@ function runShowWeatherByDate(latLong, startDate, endDate, callback) {
     let startDiffDays = moment(startDate1).diff(moment(), "days");
     let endDiffDays = moment(endDate1).diff(moment(), "days");
 
-    let future = 0; //7
+    let future = 0;
     let history = 1;
     let arrayFuture = [];
     //if startDate == 0, then end date is history
     if (startDiff === 0) {
-        showWeatherByDate(latLong, moment().unix());
+        //showWeatherByDate(latLong, moment().unix());
         for (var i = 0; i < (endDiffDays * -1); i++) {
             theDate = moment().subtract(history, 'days').unix();
-            showWeatherByDate(latLong, theDate,callback);
+            console.log("date="+moment.unix(theDate).format("YYYY-MM-DD")+" history="+history);
+            //showWeatherByDate(latLong, theDate,callback);
             history++;
         }
     }
@@ -51,7 +51,8 @@ function runShowWeatherByDate(latLong, startDate, endDate, callback) {
     if (endDiff === 0) {
         for (var i = 0; i < (startDiffDays+2); i++) {
             theDate = moment().add(future, 'days').unix();
-            showWeatherByDate(latLong, theDate, callback);
+            console.log("date="+moment.unix(theDate).format("YYYY-MM-DD")+" history="+history);
+            //showWeatherByDate(latLong, theDate, callback);
             future++;
         }
     }
@@ -60,16 +61,18 @@ function runShowWeatherByDate(latLong, startDate, endDate, callback) {
         future = Math.ceil(endDiff / 24);
         for (var i = 0; i < startDiffDays; i++) {
             theDate = moment().add(future, 'days').unix();
-            showWeatherByDate(latLong, theDate, callback);
+            console.log("date="+moment.unix(theDate).format("YYYY-MM-DD")+" history="+history);
+            //showWeatherByDate(latLong, theDate, callback);
             future++;
         }
     }
     //if stardate & enddate < 0, then dates are history
     if (startDiff < 0 && endDiff < 0) {
-        history = startDiffDays;
+        history = startDiffDays*-1;
         for (var i = 0; i < (endDiffDays * -1); i++) {
             theDate = moment().subtract(history, 'days').unix();
-            showWeatherByDate(latLong, theDate,callback);
+            console.log("date="+moment.unix(theDate).format("YYYY-MM-DD")+" history="+history);
+            //showWeatherByDate(latLong, theDate,callback);
             history++;
         }
     }
@@ -84,14 +87,11 @@ function showWeatherByDate(latLong, theDate, callback) {
 
     var apiKey = "8692514483fc6517f978c21cd04dae3b";
     var queryURL = "https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/" + apiKey + "/" + lat + "," + long + "," + theDate + "?units=us&exclude=minutely,hourly";
-    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
         var idx = moment.unix(response.daily.data[0].time).format("YYYY-MM-DD");
-        console.log(idx);
         results[idx] = {
             unixTime: moment(idx).format('X'),
             date: idx,
@@ -138,7 +138,7 @@ function showWeatherFuture(latLong, callback) {
                 summary: response.daily.data[0].summary,
                 icon: response.daily.data[0].icon,
                 pressure: response.daily.data[0].pressure,
-                windSpeed: response.daily.data[0].windSpeed
+                windSpeed: response.daily.data[0].windSpeed,
             };
             callback(results);
         });
@@ -169,7 +169,7 @@ function showWeatherHistory(latLong, callback) {
                 tempMax: response.daily.data[0].temperatureMax,
                 tempMin: response.daily.data[0].temperatureMin,
                 cloudCover: response.daily.data[0].cloudCover,
-                humidity: response.daily.data[0].cloudCover,
+                humidity: response.daily.data[0].humidity,
                 summary: response.daily.data[0].summary,
                 icon: response.daily.data[0].icon,
                 pressure: response.daily.data[0].pressure,
