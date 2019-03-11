@@ -5,3 +5,14 @@
 .navbarColor {
     background-color: lavender !important;
 }
+
+/* Used to prevent the menu from wrapping below this width */
+body {
+    min-width: 405px !important;
+}
+
+/*Need this so the line above the buttons on the modal box for the Solar ID goes all the way accross*/
+.fixLine{
+    padding-left: 15px;
+    padding-right: 15px;
+}
