@@ -20,7 +20,7 @@
         for (let i=0; i<gsolarData.length; i++) {
 
             data.addRows([
-                [gsolarData[i].date, gsolarData[i].power]
+                [gsolarData[i].date, gsolarData[i].powerGenerated]
               ]);
         }
 
@@ -28,8 +28,8 @@
 
         // Set chart options
         var options = {'title':'Power Generation',
-                       'width':460,
-                       'height':200,
+                       'width':1200,
+                       'height':500,
                        animation : { startup : true },
                        hAxis : {format:'d',
                                 showTextEvery : 3},
