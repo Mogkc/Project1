@@ -11,7 +11,7 @@ getSiteInfo("961882", function(siteInfo) {
 // Unix date Feb 8, 2019 : 1552032000
 // 
 
-var gsolarData;
+
 
 var EndDate = moment().format();
 var StartDate = moment(EndDate).subtract(14, "days");
@@ -24,9 +24,11 @@ getProductionHistory("961882", moment(StartDate).unix(), moment(EndDate).unix(),
     console.log(solarData);
     gsolarData = solarData;
 
-    google.charts.load('current', {'packages':['corechart']});     
+    // google.charts.load('current', {'packages':['corechart']});     
     
-    google.charts.setOnLoadCallback(drawChart);
+    // google.charts.setOnLoadCallback(drawChart);
+
+    
 
 });
 
