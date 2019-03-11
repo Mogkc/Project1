@@ -28,8 +28,8 @@
 
         // Set chart options
         var options = {'title':'Power Generation',
-                       'width':230,
-                       'height':100,
+                       'width':460,
+                       'height':200,
                        animation : { startup : true },
                        hAxis : {format:'d',
                                 showTextEvery : 3},
@@ -65,7 +65,7 @@
 
         // Instantiate and draw our chart, passing in some options.
        // var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('solarChart'));
  
  
         //var visualization = new google.visualization.ColumnChart(container); 
