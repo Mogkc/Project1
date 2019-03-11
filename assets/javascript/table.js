@@ -14,7 +14,7 @@ var displayRow = function(date, weatherPic, weatherText, energy) {
     dispDay.attr("scope", "row");
 
     newRow.append(dispDay);
-    //Middle element holds the weather
+    // //Middle element holds the weather
     var dispWeath = $("<td>") ;
     dispWeath.attr("scope", "row");
     var button = $("<button>");
@@ -46,3 +46,39 @@ var displayRow = function(date, weatherPic, weatherText, energy) {
 var clearTable = function() {
     $("#tableData").html("");
 }
+
+var displayFuture = function(daysOut) {
+    
+    var day = moment();
+    //Starts by predicting today's output
+    for(let daysOut = 0; daysOut < howManyDays; daysOut++) {
+        //Call for that day's weather prediction from weather API
+        //Use this as the callback: displayRow(day, <pic from weather>, <text from weather>, generatesOn);
+        day.add(1, 'days');
+    }
+}
+
+/* DUPLICATED FROM PREDICTIONS.JS, REMOVE AFTER PREDICTIONS FILE IS WORKING */
+var setDataSpan = function(endDate, startDate) {
+    if(endDate == undefined) {
+        endDate = moment().subtract(1, 'days');
+    }
+    if(startDate == undefined) {
+        startDate = moment().subtract(30, 'days');
+    }
+
+    return { start: startDate,
+        end: endDate };
+};
+
+var test = function() {
+    var span = setDataSpan();
+    var siteID = "961882";
+    getProductionHistory(siteID, span.start.format("X"), span.end.format("X"), function(result) {
+        result.forEach(element => {
+            displayRow(moment.unix(element.dateUnix), "assets/images/supporting image files/Weather Icons/icon_preview", "Placeholder", element.powerGenerated);
+        });
+    })
+}
+
+test();
