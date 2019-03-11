@@ -61,12 +61,12 @@ var correlateProduction = function(weatherHist, energyHist) {
 
 /**
  * 
- * @param {moment} endDate Optional, if empty is set to today
+ * @param {moment} endDate Optional, if empty is set to yesterday
  * @param {moment} startDate Optional, requires endDate. If empty defaults to 30 days prior to endDate
  */
 var setDataSpan = function(endDate, startDate) {
     if(endDate == undefined) {
-        endDate = moment(); //The current date
+        endDate = moment().subtract(1, 'days');
     }
     if(startDate == undefined) {
         startDate = moment().subtract(30, 'days');
