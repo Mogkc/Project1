@@ -6,8 +6,6 @@
 
 var apiKey = "Z9OV01B8GW40QM4DE8N1NM11M33S83MG";
 
-
-
 function buildURL(siteID, command) {
 
     var rslt = "https://cors-anywhere.herokuapp.com/https://monitoringapi.solaredge.com/site/" + siteID + "/" + command + "api_key=" + apiKey;
