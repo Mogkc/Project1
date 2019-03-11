@@ -14,13 +14,29 @@ var database = firebase.database();
 var solarArrayId = "";
 
 
-//Required with Bootstrap for the toggle to work
+//Required with Bootstrap for the popover on the weather to work
 $(function () {
     $('[data-toggle="popover"]').popover()
 })
 
-//Puts focus on the solor ID input field
+$(document).on("click", "#menuTableChart", function () {
+    console.log($(this).text());
+
+    if ($(this).text() = "Chart") {
+        $(this).text("Table");
+        $("#solarChart").css("display","none")
+        $("#solarTable").css("display","block")
+    }  else {
+        $(this).text("Chart");
+        $("#solarTable").css("display","none")
+        $("#solarChart").css("display","block")
+    }
+})
+
+
+
 $('#yourId').on('shown.bs.modal', function () {
+    //Puts focus on the solor ID input field
     $('#solarId').focus();
 
     database.ref().once('value', function (snapshot) {
