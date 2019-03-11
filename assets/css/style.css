@@ -19,4 +19,6 @@ body {
 
 #solarChart {
     display: none;
+    width: 100%;
+    min-height: 450px;
 }

@@ -12,7 +12,8 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 //Get initial solar array id from database
-var solarArrayId = getSolarArrayId();;
+var solarArrayId = getSolarArrayId();
+
 
 
 
@@ -37,7 +38,7 @@ $(function () {
 })
 
 $(document).on("click", "#menuTableChart", function () {
-    console.log($(this).text());
+    // console.log($(this).text());
 
     if ($(this).text() === "Chart") {
         $(this).text("Table");
@@ -45,6 +46,7 @@ $(document).on("click", "#menuTableChart", function () {
         $("#solarChart").css("display","block")
     }  else {
         $(this).text("Chart");
+        drawChart1();
         $("#solarChart").css("display","none")
         $("#solarTable").css("display","block") 
     }
