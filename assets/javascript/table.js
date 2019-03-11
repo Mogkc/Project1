@@ -28,7 +28,7 @@ var displayRow = function(date, weatherPic, weatherText, energy) {
 
     newRow.append($("<td>").append(button) );
     //Rightmost element is energy prediction
-    newRow.append("<td>").text(energy);
+    newRow.append("<td>").text(energy + " kW hours");
 
     //Append the row to the existing table
     $("#tableData").append(newRow);
