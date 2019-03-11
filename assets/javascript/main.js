@@ -13,19 +13,11 @@ getSiteInfo("961882", function(siteInfo) {
 
 var gsolarData;
 
-
 var EndDate = moment().format();
 var StartDate = moment(EndDate).subtract(14, "days");
 console.log("StartDate = " + StartDate + " EndDate = " + EndDate);
 
-
-
-
-
-
-
 getProductionHistory("961882", moment(StartDate).unix(), moment(EndDate).unix(), function(solarData) {
-
 
     // getProductionHistory("961882", 1546329600, 1552032000, function(solarData) {
     console.log("From getProductionHistory callback ");

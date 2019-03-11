@@ -20,11 +20,11 @@
         for (let i=0; i<gsolarData.length; i++) {
 
             data.addRows([
-                [gsolarData[i].date, gsolarData[i].powerGenerated]
+                [gsolarData[i].date, gsolarData[i].power]
               ]);
         }
 
-//  console.log("googleized data = " + JSON.stringify(data));
+        console.log("googleized data = " + JSON.stringify(data));
 
         // Set chart options
         var options = {'title':'Power Generation',
