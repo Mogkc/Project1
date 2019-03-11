@@ -11,7 +11,24 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
-var solarArrayId = "";
+//Get initial solar array id from database
+var solarArrayId = getSolarArrayId();;
+
+
+
+function getSolarArrayId () {
+    var solarArrayId = "";
+
+    database.ref().once('value', function (snapshot) {
+        if (snapshot.hasChild("solarArrayId")) {
+            solarArrayId = snapshot.val().solarArrayId;
+        }
+    }, function (errorObject) {
+        console.log("Errors handled: " + errorObject.code);
+    });
+
+    return(solarArrayId)
+}
 
 
 //Required with Bootstrap for the popover on the weather to work
@@ -22,14 +39,14 @@ $(function () {
 $(document).on("click", "#menuTableChart", function () {
     console.log($(this).text());
 
-    if ($(this).text() = "Chart") {
+    if ($(this).text() === "Chart") {
         $(this).text("Table");
-        $("#solarChart").css("display","none")
-        $("#solarTable").css("display","block")
-    }  else {
-        $(this).text("Chart");
         $("#solarTable").css("display","none")
         $("#solarChart").css("display","block")
+    }  else {
+        $(this).text("Chart");
+        $("#solarChart").css("display","none")
+        $("#solarTable").css("display","block") 
     }
 })
 
@@ -38,6 +55,9 @@ $(document).on("click", "#menuTableChart", function () {
 $('#yourId').on('shown.bs.modal', function () {
     //Puts focus on the solor ID input field
     $('#solarId').focus();
+
+    var solarArrayId = getSolarArrayId ();
+    $('#solarId').val(solarArrayId);
 
     database.ref().once('value', function (snapshot) {
         if (snapshot.hasChild("solarArrayId")) {
