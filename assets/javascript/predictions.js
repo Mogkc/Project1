@@ -27,7 +27,7 @@ var predict = function(dayWeather) {
  * @param {array} weatherHist The previous 30 days' weather, oldest at 0
  * @param {object array} energyHist The previous 30 days' dates and energy production, oldest at 0
  */
-var correlateProduction = function(weatherHist, energyHist) {
+var correlateProduction = function(weatherHist, energyHist, displayFuture) {
     /* TO BE MODIFIED BASED ON API USED FOR WEATHER */
 
     //Create variables for averaging energy based on weather
@@ -73,6 +73,6 @@ var setDataSpan = function(endDate, startDate) {
     }
 
     return { start: startDate,
-        end = endDate };
+        end: endDate };
 };
 
