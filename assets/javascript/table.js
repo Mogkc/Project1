@@ -5,13 +5,30 @@
  * @param {string} weatherText Info about that day's weather
  * @param {number} energy Energy production for that day
  */
+var firstRow = true;
 var displayRow = function (date, weatherPic, weatherText, energy) {
     var newRow = $("<tr>");
-    //Leftmost element is date
+    //leftmost element is the color - blue for past, and red for future
+    var dispCol = $("<td>");
+    dispCol.attr("scope", "row");
+    var tableColor = ""
+    if (date < moment().subtract(1, "days")) {
+        tableColor = '#E6E6FA'
+    } else {
+        tableColor = '#A9635E'
+        if (firstRow) {
+            firstRow = false;
+            newRow.attr("id","firstRow");
+        }
+    }
+    dispCol.css("background-color",tableColor)
+    newRow.append(dispCol);
+
+    //next element is date
     var day = date.format("ddd, MMM DD");
     var dispDay = $("<td>");
     dispDay.text(day);
-    dispDay.attr("scope", "row");
+    // dispDay.attr("scope", "row");
 
     newRow.append(dispDay);
     // //Middle element holds the weather
