@@ -46,7 +46,9 @@ function getSiteInfo(siteID, callback) {
       
               rslt.lastUpdateTime =  response.overview.lastUpdateTime;
               rslt.currentPower   =  response.overview.currentPower.power;
-              // rslt.address = 
+              rslt.streetAddress  =  response.overview.address;       
+              rslt.streetState    =  response.overview.state;     
+              rslt.streetCity     =  response.overview.city;     
 
               console.log(rslt);
 
