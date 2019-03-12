@@ -17,9 +17,10 @@ var database = firebase.database();
 var solarArrayId = "";
 
 //Required with Bootstrap for the popover on the weather to work
-$(function () {
-    $('[data-toggle="popover"]').popover()
-})
+// $(function () {
+//     $('[data-toggle="popover"]').popover()
+// })
+
 
 //all inital loading in here
 $(document).ready(function () {
