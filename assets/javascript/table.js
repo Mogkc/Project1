@@ -26,12 +26,13 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     button.attr("data-placement", "right");
     button.attr("data-content", weatherText);
     button.attr("data-trigger", "focus");
+    // button.setContent();
     //Make the button hold the image
     var img = $("<img>");
     img.attr("class", "icon");
     img.attr("src", "assets/images/weather/" + weatherPic + ".png");
     button.append(img);
-    dispWeath.append(button);
+    dispWeath.append(button.popover());
 
     newRow.append(dispWeath);
     //Rightmost element is energy prediction
