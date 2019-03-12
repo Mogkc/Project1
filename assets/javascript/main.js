@@ -1,10 +1,10 @@
-/* 
+ 
 getSiteInfo("961882", function(siteInfo) {
 
     console.log("From getSiteInfo callback"); 
     console.log(siteInfo);
 }); 
- */
+
 
 
 // Unix Date Jan 1, 2019 : 1546329600
