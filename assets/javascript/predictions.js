@@ -19,14 +19,14 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
         startDate = moment().subtract(30, 'days');
     }
     getProductionHistory(siteID, startDate.format("X"), endDate.format("X"), function (prodHist) {
-        showWeather("1600 Amphitheatre Parkway, Mountain View,California", startDate.format("X"), endDate.format("X"), function (weathHist) {
+        showWeather(siteID, startDate.format("X"), endDate.format("X"), function (weathHist) {
             correlateProduction(prodHist, weathHist, function () {
                 //loop through them creating table rows for historical data
                 for (let i = 0; i < prodHist.length; i++) {
                     var day = prodHist[i].date;
                     displayRow(moment.unix(prodHist[i].dateUnix), weathHist[day].icon, weathHist[day].summary, prodHist[i].powerGenerated);
                 }
-                displayFuture();
+                displayFuture(siteID);
             });
         }, false);
     });
@@ -35,15 +35,16 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
 
 /**
  * Starting today, creates table rows based on predicted weather and energy
+ * @param {string} siteID The SolarEdge site ID
  * @param {number} howManyDays How many days (including today) to predict. Defaults to 7
  */
-var displayFuture = function (howManyDays) {
+var displayFuture = function (siteID, howManyDays) {
     if (howManyDays === undefined) {
         howManyDays = 7;
     }
     var day = moment();
     //Get the forcast
-    showWeather("1600 Amphitheatre Parkway, Mountain View,California", day.format("X"), day.add(howManyDays, 'days').format("X"), function (weatherHist) {
+    showWeather(siteID, day.format("X"), day.add(howManyDays, 'days').format("X"), function (weatherHist) {
         //Undo the addition in showWeather's parameters
         day.subtract(howManyDays, 'days');
         //Use the forecast to predict the energy generated
@@ -105,7 +106,6 @@ var correlateProduction = function (energyHist, weatherHist, callback) {
         }
     }
 
-    console.log("Sunny Days: " + numSunny + ". Sunny Days generated: " + genSunny);
     //Update predictions using the sorted data's averages
     generatesOn.sunny = Math.floor(genSunny / numSunny);
     generatesOn.mostlySunny = Math.floor(genMSunny / numMSunny);
