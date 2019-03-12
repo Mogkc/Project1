@@ -16,9 +16,9 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     newRow.append(dispDay);
     // //Middle element holds the weather
     var dispWeath = $("<td>");
-    dispWeath.attr("scope", "row");
-    var button = $("<button>");
+    dispWeath.attr("class", "text-center");
     //Format the button so it can show popover text
+    var button = $("<button>");
     button.attr("type", "button");
     button.attr("class", "btn btn-link p-0");
     button.attr("data-container", "body");
@@ -28,7 +28,8 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     button.attr("data-trigger", "focus");
     //Make the button hold the image
     var img = $("<img>");
-    img.attr("src", "../images/weather/" + weatherPic + ".png");
+    img.attr("class", "icon");
+    img.attr("src", "assets/images/weather/" + weatherPic + ".png");
     button.append(img);
     dispWeath.append(button);
 

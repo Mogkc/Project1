@@ -8,7 +8,7 @@ var generatesOn = {
  * @param {moment} endDate Optional, if empty is set to yesterday
  * @param {moment} startDate Optional, requires endDate. If empty defaults to 30 days prior to endDate
  */
-var getWeatherAndEnergyHist = function (siteID, endDate, startDate, callback) {
+var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
     if (siteID === undefined) {
         siteID = "961882";
     }
@@ -18,24 +18,19 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate, callback) {
     if (startDate == undefined) {
         startDate = moment().subtract(30, 'days');
     }
-    console.log("getting solar");
     getProductionHistory(siteID, startDate.format("X"), endDate.format("X"), function (prodHist) {
-        console.log("got solar");
-        console.log("getting weather");
         showWeather("1600 Amphitheatre Parkway, Mountain View,California", startDate.format("X"), endDate.format("X"), function (weathHist) {
-            console.log("got weather");
-
+            console.log("Got Data");
             correlateProduction(prodHist, weathHist, function () {
-                console.log("done with correlate production");
+                console.log("Correlated data. weathHist.length: " + weathHist.length + ". prodHist.length: " + prodHist.length + ".");
+                console.log(weathHist);
                 //loop through them creating table rows for historical data
-                for (let i = 0; i < weathHist.length && i < prodHist.length; i++) {
+                for (let i = 0; i < prodHist.length; i++) {
                     var day = prodHist[i].date;
-                    //Figure out images later
-                    displayRow(moment.unix(element.dateUnix), weathHist[day].summary, weathHist[day].summary, element.powerGenerated);
+                    displayRow(moment.unix(prodHist[i].dateUnix), weathHist[day].icon, weathHist[day].summary, prodHist[i].powerGenerated);
                 }
-                callback(true);
+                displayFuture();
             });
-
         }, false);
     });
 }
@@ -45,15 +40,13 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate, callback) {
  * Starting today, creates table rows based on predicted weather and energy
  * @param {number} howManyDays How many days (including today) to predict. Defaults to 7
  */
-var displayFuture = function (howManyDays, callback) {
+var displayFuture = function (howManyDays) {
     if (howManyDays === undefined) {
         howManyDays = 7;
     }
     var day = moment();
     //Get the forcast
-    console.log("getting future weather");
     showWeather("1600 Amphitheatre Parkway, Mountain View,California", day.format("X"), day.add(howManyDays, 'days').format("X"), function (weatherHist) {
-        console.log("got future weather");
         //Undo the addition in showWeather's parameters
         day.subtract(howManyDays, 'days');
         //Use the forecast to predict the energy generated
@@ -69,20 +62,17 @@ var displayFuture = function (howManyDays, callback) {
                 generated = generatesOn.cloudy;
             }
             //Update the table
-            displayRow(day, weather.summary, weather.summary, generated);
+            displayRow(day, weather.icon, weather.summary, generated);
             day.add(1, 'days');
         });
-        callback(true);
     }, true);
 }
-
-
 
 /**
  * 
  * @param {array} weatherHist The previous 30 days' weather, oldest at 0
  * @param {object array} energyHist The previous 30 days' dates and energy production, oldest at 0
- * @param {function} displayFuture The function DisplayFuture, which uses the correlated data to create new table rows
+ * @param {function} callback The function DisplayFuture, which uses the correlated data to create new table rows
  */
 var correlateProduction = function (weatherHist, energyHist, callback) {
     //Create variables for averaging energy based on weather. M is mostly
@@ -117,9 +107,5 @@ var correlateProduction = function (weatherHist, energyHist, callback) {
     generatesOn.mostlyCloudy = (genMCloudy / numMCloudy);
     generatesOn.cloudy = (genCloudy / numCloudy);
 
-    displayFuture(7, callback);
-    callback(true);
+    callback();
 };
-
-
-
