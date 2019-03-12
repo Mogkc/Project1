@@ -16,9 +16,9 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     newRow.append(dispDay);
     // //Middle element holds the weather
     var dispWeath = $("<td>");
-    dispWeath.attr("scope", "row");
-    var button = $("<button>");
+    dispWeath.attr("class", "text-center");
     //Format the button so it can show popover text
+    var button = $("<button>");
     button.attr("type", "button");
     button.attr("class", "btn btn-link p-0");
     button.attr("data-container", "body");
@@ -28,7 +28,8 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     button.attr("data-trigger", "focus");
     //Make the button hold the image
     var img = $("<img>");
-    img.attr("src", weatherPic);
+    img.attr("class", "icon");
+    img.attr("src", "assets/images/weather/" + weatherPic + ".png");
     button.append(img);
     dispWeath.append(button);
 
@@ -50,34 +51,3 @@ var clearTable = function () {
     $("#tableData").html("");
 }
 
-/**
- * Starting today, creates table rows based on predicted weather and energy
- * @param {number} howManyDays How many days (including today) to predict. Defaults to 7
- */
-var displayFuture = function (howManyDays) {
-    if(howManyDays === undefined) {
-        howManyDays = 7;
-    }
-    var day = moment();
-    //Get the forcast
-    showWeather("1600 Amphitheatre Parkway, Mountain View,California", day.format("X"), day.add(howManyDays, 'days').format("X"), function (weathHist) {
-        //Undo the addition in showWeather's parameters
-        day.subtract(howManyDays, 'days');
-        //Use the forecast to predict the energy generated
-        array.forEach(prediction => {
-            let generated;
-            if (prediction.cloudCover < .25) {
-                generated = generatesOn.sunny;
-            } else if (prediction.cloudCover < .5) {
-                generated = generatesOn.mostlySunny;
-            } else if (prediction.cloudCover < .7) {
-                generated = generatesOn.mostlyCloudy;
-            } else {
-                generated = generatesOn.cloudy;
-            }
-            //Update the table
-            //displayRow(day, <pic>, weather.summary, generated);
-            day.add(1, 'days');
-        });
-    }, true);
-}

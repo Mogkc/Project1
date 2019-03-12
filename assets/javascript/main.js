@@ -16,10 +16,18 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var solarArrayId = "";
 
+//Required with Bootstrap for the popover on the weather to work
+$(function () {
+    $('[data-toggle="popover"]').popover()
+})
+
 //all inital loading in here
 $(document).ready(function () {
 
-    startUp();
+    //startUp();
+    getWeatherAndEnergyHist(undefined, undefined, undefined, function() {
+        console.log("Reached callback");
+    });
 
     function startUp() {
         //Show the status 
@@ -36,10 +44,11 @@ $(document).ready(function () {
                 $("#startUpP").text('Before we can predict your solar output, you need to enter your Solar ID.  Please the "Solar ID" menu option above to begin.');
             } else {
                 $("#startUpP").text('Getting energy predictions...');
-                getWeatherAndEnergyHist(solarArrayId, function(worked) {
+                getWeatherAndEnergyHist(solarArrayId, undefined, undefined, function(worked) {
 
                     dataReady = worked;
 
+                    console.log("show table!");
                     $("#solarTable").css("display", "block");
                     $("#solarChart").css("display", "none");
                     $("#startUp").css("display", "none");
@@ -76,10 +85,6 @@ $(document).ready(function () {
 
     })
 
-    //Required with Bootstrap for the popover on the weather to work
-    $(function () {
-        $('[data-toggle="popover"]').popover()
-    })
 
     $(document).on("click", "#menuTableChart", function () {
         // console.log($(this).text());
