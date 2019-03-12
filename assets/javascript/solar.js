@@ -32,8 +32,10 @@ function getSiteInfo(siteID, callback) {
     }).then(function(response) {  
 
         //console.log(response);
-        rslt.zip = response.details.location.zip;
-
+        rslt.zip            =  response.details.location.zip;
+        rslt.streetAddress  =  response.details.location.address;       
+        rslt.streetState    =  response.details.location.state;     
+        rslt.streetCity     =  response.details.location.city;     
 
         // ------------------  Get the site overview
         queryURL = buildURL(siteID, "overview?");   
@@ -42,15 +44,12 @@ function getSiteInfo(siteID, callback) {
             method: "GET"
           }).then(function(response) {  
       
-              // console.log(response);
+              //console.log(response);
       
               rslt.lastUpdateTime =  response.overview.lastUpdateTime;
               rslt.currentPower   =  response.overview.currentPower.power;
-              rslt.streetAddress  =  response.overview.address;       
-              rslt.streetState    =  response.overview.state;     
-              rslt.streetCity     =  response.overview.city;     
 
-              console.log(rslt);
+              //console.log(rslt);
 
               callback(rslt);
           });

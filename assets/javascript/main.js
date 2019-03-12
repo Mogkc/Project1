@@ -1,3 +1,6 @@
+
+
+
 //Firebase database for storing the solar array
 // Initialize Firebase
 var config = {
