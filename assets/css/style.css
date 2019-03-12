@@ -19,6 +19,16 @@ body {
 
 #solarChart {
     display: none;
+}
+
+#solarChartDiv{
     width: 100%;
     min-height: 450px;
 }
+
+
+#startUp{
+    display: none;
+}
+
+
