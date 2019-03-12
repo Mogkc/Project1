@@ -3,12 +3,15 @@ var generatesOn = {
 };
 
 /**
- * Gets the history for energy production and weather, then calls to correlate them
+ * Gets the history for energy production and weather, calls another function to correlate them, and populates the table.
+ * @param {number} siteID The ID of the site the user is interested in, if empty defaults to Richard Moore's
  * @param {moment} endDate Optional, if empty is set to yesterday
  * @param {moment} startDate Optional, requires endDate. If empty defaults to 30 days prior to endDate
  */
-var getWeatherAndEnergyHist = function (endDate, startDate) {
-    var span = setDataSpan();
+var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
+    if(siteID === undefined) {
+        siteID = "961882";
+    }
     if (endDate == undefined) {
         endDate = moment().subtract(1, 'days');
     }
@@ -16,17 +19,16 @@ var getWeatherAndEnergyHist = function (endDate, startDate) {
         startDate = moment().subtract(30, 'days');
     }
 
-    getProductionHistory("961882", startDate.format("X"), endDate.format("X"), function (prodHist) {
-        showWeather("1600 Amphitheatre Parkway, Mountain View,California", span.start.format("X"), span.end.format("X"), function (weathHist) {
-            //loop through them creating table rows for historical data, then pass them to correlatePredictions
-            console.log("W length: " + weathHist.length + " P length: " + prodHist.length);
+    getProductionHistory(siteID, startDate.format("X"), endDate.format("X"), function (prodHist) {
+        showWeather("1600 Amphitheatre Parkway, Mountain View,California", startDate.format("X"), endDate.format("X"), function (weathHist) {
+            correlateProduction(prodHist, weathHist);
+            //loop through them creating table rows for historical data
             for (let i = 0; i < weathHist.length && i < prodHist.length; i++) {
                 var day = prodHist[i].date;
                 //Figure out images later
                 displayRow(moment.unix(element.dateUnix), "", weathHist[day].summary, element.powerGenerated);
             }
-            correlateProduction(prodHist, weathHist);
-        });
+        }, false);
     });
 }
 
@@ -64,10 +66,10 @@ var correlateProduction = function (weatherHist, energyHist, displayFuture) {
     }
 
     //Update predictions using the sorted data's averages
-    generatesOn.sunny = (genSun / numSun);
-    generatesOn.mostlySunny = (genMSun / numMSun);
+    generatesOn.sunny = (genSunny / numSunny);
+    generatesOn.mostlySunny = (genMSunny / numMSunny);
     generatesOn.mostlyCloudy = (genMCloudy / numMCloudy);
-    generatesOn.cloudy = (genCloudy / numMCloudy);
+    generatesOn.cloudy = (genCloudy / numCloudy);
 
     displayFuture(7);
 };

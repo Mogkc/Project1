@@ -1,11 +1,11 @@
 /**
- * 
+ * Creates a new table row with the given data, then appends it to the table
  * @param {Date} date The day this row will describe
- * @param {url} weatherPic The url for that day's weather icon
+ * @param {string} weatherPic The reference for that day's weather icon
  * @param {string} weatherText Info about that day's weather
- * @param {string} energy Energy production for that day
+ * @param {number} energy Energy production for that day
  */
-var displayRow = function(date, weatherPic, weatherText, energy) {
+var displayRow = function (date, weatherPic, weatherText, energy) {
     var newRow = $("<tr>");
     //Leftmost element is date
     var day = date.format("dddd, MMMM Do");
@@ -15,7 +15,7 @@ var displayRow = function(date, weatherPic, weatherText, energy) {
 
     newRow.append(dispDay);
     // //Middle element holds the weather
-    var dispWeath = $("<td>") ;
+    var dispWeath = $("<td>");
     dispWeath.attr("scope", "row");
     var button = $("<button>");
     //Format the button so it can show popover text
@@ -43,16 +43,41 @@ var displayRow = function(date, weatherPic, weatherText, energy) {
     $("#tableData").append(newRow);
 }
 
-var clearTable = function() {
+/**
+ * Completely empties the table.
+ */
+var clearTable = function () {
     $("#tableData").html("");
 }
 
-var displayFuture = function(daysOut) {
-    var day = moment();
-    //Starts by predicting today's output
-    for(let daysOut = 0; daysOut < howManyDays; daysOut++) {
-        //Call for that day's weather prediction from weather API
-        //Use this as the callback: displayRow(day, <pic from weather>, <text from weather>, generatesOn);
-        day.add(1, 'days');
+/**
+ * Starting today, creates table rows based on predicted weather and energy
+ * @param {number} howManyDays How many days (including today) to predict. Defaults to 7
+ */
+var displayFuture = function (howManyDays) {
+    if(howManyDays === undefined) {
+        howManyDays = 7;
     }
+    var day = moment();
+    //Get the forcast
+    showWeather("1600 Amphitheatre Parkway, Mountain View,California", day.format("X"), day.add(howManyDays, 'days').format("X"), function (weathHist) {
+        //Undo the addition in showWeather's parameters
+        day.subtract(howManyDays, 'days');
+        //Use the forecast to predict the energy generated
+        array.forEach(prediction => {
+            let generated;
+            if (prediction.cloudCover < .25) {
+                generated = generatesOn.sunny;
+            } else if (prediction.cloudCover < .5) {
+                generated = generatesOn.mostlySunny;
+            } else if (prediction.cloudCover < .7) {
+                generated = generatesOn.mostlyCloudy;
+            } else {
+                generated = generatesOn.cloudy;
+            }
+            //Update the table
+            //displayRow(day, <pic>, weather.summary, generated);
+            day.add(1, 'days');
+        });
+    }, true);
 }
