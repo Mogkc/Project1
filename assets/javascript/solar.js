@@ -37,7 +37,6 @@ function getSiteInfo(siteID, callback) {
         rslt.streetState    =  response.details.location.state;     
         rslt.streetCity     =  response.details.location.city;     
 
-
         // ------------------  Get the site overview
         queryURL = buildURL(siteID, "overview?");   
         $.ajax({
