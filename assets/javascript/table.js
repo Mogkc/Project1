@@ -48,7 +48,6 @@ var clearTable = function() {
 }
 
 var displayFuture = function(daysOut) {
-    
     var day = moment();
     //Starts by predicting today's output
     for(let daysOut = 0; daysOut < howManyDays; daysOut++) {
@@ -57,28 +56,3 @@ var displayFuture = function(daysOut) {
         day.add(1, 'days');
     }
 }
-
-/* DUPLICATED FROM PREDICTIONS.JS, REMOVE AFTER PREDICTIONS FILE IS WORKING */
-var setDataSpan = function(endDate, startDate) {
-    if(endDate == undefined) {
-        endDate = moment().subtract(1, 'days');
-    }
-    if(startDate == undefined) {
-        startDate = moment().subtract(30, 'days');
-    }
-
-    return { start: startDate,
-        end: endDate };
-};
-
-var test = function() {
-    var span = setDataSpan();
-    var siteID = "961882";
-    getProductionHistory(siteID, span.start.format("X"), span.end.format("X"), function(result) {
-        result.forEach(element => {
-            displayRow(moment.unix(element.dateUnix), "assets/images/supporting image files/Weather Icons/icon_preview", "Placeholder", element.powerGenerated);
-        });
-    })
-}
-
-test();
