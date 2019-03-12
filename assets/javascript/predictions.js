@@ -18,9 +18,13 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
     if (startDate == undefined) {
         startDate = moment().subtract(30, 'days');
     }
-
+    console.log("getting solar");
     getProductionHistory(siteID, startDate.format("X"), endDate.format("X"), function (prodHist) {
+        console.log("got solar");
+        console.log("getting weather");
         showWeather("1600 Amphitheatre Parkway, Mountain View,California", startDate.format("X"), endDate.format("X"), function (weathHist) {
+            console.log("got weather");
+            
             correlateProduction(prodHist, weathHist);
             //loop through them creating table rows for historical data
             for (let i = 0; i < weathHist.length && i < prodHist.length; i++) {
@@ -28,6 +32,7 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
                 //Figure out images later
                 displayRow(moment.unix(element.dateUnix), "", weathHist[day].summary, element.powerGenerated);
             }
+            
         }, false);
     });
 }
@@ -73,3 +78,37 @@ var correlateProduction = function (weatherHist, energyHist, displayFuture) {
 
     displayFuture(7);
 };
+
+
+
+/**
+ * Starting today, creates table rows based on predicted weather and energy
+ * @param {number} howManyDays How many days (including today) to predict. Defaults to 7
+ */
+var displayFuture = function (howManyDays) {
+    if(howManyDays === undefined) {
+        howManyDays = 7;
+    }
+    var day = moment();
+    //Get the forcast
+    showWeather("1600 Amphitheatre Parkway, Mountain View,California", day.format("X"), day.add(howManyDays, 'days').format("X"), function (weathHist) {
+        //Undo the addition in showWeather's parameters
+        day.subtract(howManyDays, 'days');
+        //Use the forecast to predict the energy generated
+        array.forEach(prediction => {
+            let generated;
+            if (prediction.cloudCover < .25) {
+                generated = generatesOn.sunny;
+            } else if (prediction.cloudCover < .5) {
+                generated = generatesOn.mostlySunny;
+            } else if (prediction.cloudCover < .7) {
+                generated = generatesOn.mostlyCloudy;
+            } else {
+                generated = generatesOn.cloudy;
+            }
+            //Update the table
+            //displayRow(day, <pic>, weather.summary, generated);
+            day.add(1, 'days');
+        });
+    }, true);
+}

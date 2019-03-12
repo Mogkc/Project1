@@ -33,7 +33,7 @@ $(document).ready(function () {
                 $("#startUpP").text('Before we can predict your solar output, you need to enter your Solar ID.  Please the "Solar ID" menu option above to begin.');
             } else {
                 $("#startUpP").text('Getting energy predictions...');
-                getWeatherAndEnergyHist(solarArrayId, function(worked) {
+                getWeatherAndEnergyHist(solarArrayId, undefined, undefined, function(worked) {
 
                     dataReady = worked;
 
