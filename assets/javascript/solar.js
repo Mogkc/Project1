@@ -1,4 +1,3 @@
-
 // SOLAR API
 // This component uses the SolarEdge API - https://www.solaredge.com/sites/default/files/se_monitoring_api.pdf
 //
@@ -94,7 +93,6 @@ function getProductionHistory(siteID, startDateUnix, endDateUnix , callback) {
             rslt.push( {  date : datestr,
                         dateUnix : dateUnix,
                         powerGenerated : response.energy.values[i].value });
-
         }
         //console.log("From ajax call " + rslt);
         callback(rslt);

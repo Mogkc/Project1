@@ -8,7 +8,7 @@
 var displayRow = function (date, weatherPic, weatherText, energy) {
     var newRow = $("<tr>");
     //Leftmost element is date
-    var day = date.format("dddd, MMMM Do");
+    var day = date.format("ddd, MMM DD");
     var dispDay = $("<td>");
     dispDay.text(day);
     dispDay.attr("scope", "row");
@@ -38,7 +38,7 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     //Rightmost element is energy prediction
     var energyDisp = $("<td>");
     energyDisp.attr("class", "text-right");
-    energyDisp.text(energy + " kW hours");
+    energyDisp.text(energy + "");
 
     newRow.append(energyDisp);
     //Append the row to the existing table
