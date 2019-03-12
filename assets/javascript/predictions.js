@@ -23,7 +23,6 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
         showWeather("1600 Amphitheatre Parkway, Mountain View,California", startDate.format("X"), endDate.format("X"), function (weathHist) {
             correlateProduction(prodHist, weathHist);
             //loop through them creating table rows for historical data
-            console.log("W length: " + weathHist.length + " P length: " + prodHist.length);
             for (let i = 0; i < weathHist.length && i < prodHist.length; i++) {
                 var day = prodHist[i].date;
                 //Figure out images later
@@ -67,10 +66,10 @@ var correlateProduction = function (weatherHist, energyHist, displayFuture) {
     }
 
     //Update predictions using the sorted data's averages
-    generatesOn.sunny = (genSun / numSun);
-    generatesOn.mostlySunny = (genMSun / numMSun);
+    generatesOn.sunny = (genSunny / numSunny);
+    generatesOn.mostlySunny = (genMSunny / numMSunny);
     generatesOn.mostlyCloudy = (genMCloudy / numMCloudy);
-    generatesOn.cloudy = (genCloudy / numMCloudy);
+    generatesOn.cloudy = (genCloudy / numCloudy);
 
     displayFuture(7);
 };
