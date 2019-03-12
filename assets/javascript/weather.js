@@ -1,6 +1,6 @@
-showWeather("1600 Amphitheatre Parkway, Mountain View,California","","", function(res1){
-    console.log(res1);
-},true);
+// showWeather("1600 Amphitheatre Parkway, Mountain View,California","","", function(res1){
+//     console.log(res1);
+// },true);
 
 //START - Google Maps API
 //get latitude and longitude base on address
