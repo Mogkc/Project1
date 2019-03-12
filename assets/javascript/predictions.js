@@ -20,10 +20,7 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
     }
     getProductionHistory(siteID, startDate.format("X"), endDate.format("X"), function (prodHist) {
         showWeather("1600 Amphitheatre Parkway, Mountain View,California", startDate.format("X"), endDate.format("X"), function (weathHist) {
-            console.log("Got Data");
             correlateProduction(prodHist, weathHist, function () {
-                console.log("Correlated data. weathHist.length: " + weathHist.length + ". prodHist.length: " + prodHist.length + ".");
-                console.log(weathHist);
                 //loop through them creating table rows for historical data
                 for (let i = 0; i < prodHist.length; i++) {
                     var day = prodHist[i].date;
@@ -47,10 +44,14 @@ var displayFuture = function (howManyDays) {
     var day = moment();
     //Get the forcast
     showWeather("1600 Amphitheatre Parkway, Mountain View,California", day.format("X"), day.add(howManyDays, 'days').format("X"), function (weatherHist) {
+        console.log("Got Future Data");
+        console.log(weatherHist);
         //Undo the addition in showWeather's parameters
         day.subtract(howManyDays, 'days');
         //Use the forecast to predict the energy generated
-        weatherHist.forEach(prediction => {
+        for(var daysOut = 0; daysOut < howManyDays; daysOut++) {
+            let prediction = weatherHist[day.format("YYYY-MM-DD")];
+            console.log(prediction);
             let generated;
             if (prediction.cloudCover < .25) {
                 generated = generatesOn.sunny;
@@ -62,9 +63,9 @@ var displayFuture = function (howManyDays) {
                 generated = generatesOn.cloudy;
             }
             //Update the table
-            displayRow(day, weather.icon, weather.summary, generated);
+            displayRow(day, prediction.icon, prediction.summary, generated);
             day.add(1, 'days');
-        });
+        }
     }, true);
 }
 
@@ -72,7 +73,7 @@ var displayFuture = function (howManyDays) {
  * 
  * @param {array} weatherHist The previous 30 days' weather, oldest at 0
  * @param {object array} energyHist The previous 30 days' dates and energy production, oldest at 0
- * @param {function} callback The function DisplayFuture, which uses the correlated data to create new table rows
+ * @param {function} callback The function to be started after the future is correlated
  */
 var correlateProduction = function (weatherHist, energyHist, callback) {
     //Create variables for averaging energy based on weather. M is mostly
