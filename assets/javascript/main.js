@@ -37,6 +37,7 @@ $(document).ready(function () {
 
                     dataReady = worked;
 
+                    console.log("show table!");
                     $("#solarTable").css("display", "block");
                     $("#solarChart").css("display", "none");
                     $("#startUp").css("display", "none");

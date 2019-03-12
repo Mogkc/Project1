@@ -28,7 +28,7 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     button.attr("data-trigger", "focus");
     //Make the button hold the image
     var img = $("<img>");
-    img.attr("src", weatherPic);
+    img.attr("src", "../images/weather/" + weatherPic + ".png");
     button.append(img);
     dispWeath.append(button);
 
