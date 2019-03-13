@@ -38,7 +38,7 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     //Rightmost element is energy prediction
     var energyDisp = $("<td>");
     energyDisp.attr("class", "text-right");
-    energyDisp.text(energy + "");
+    energyDisp.text(energy.toLocaleString());
 
     newRow.append(energyDisp);
     //Append the row to the existing table
