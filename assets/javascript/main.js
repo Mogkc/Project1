@@ -25,10 +25,10 @@ var solarArrayId = "";
 //all inital loading in here
 $(document).ready(function () {
 
-    //startUp();
-    getWeatherAndEnergyHist(undefined, undefined, undefined, function() {
-        console.log("Reached callback");
-    });
+    startUp();
+    // getWeatherAndEnergyHist(undefined, undefined, undefined, function () {
+    //     console.log("Reached callback");
+    // });
 
     function startUp() {
         //Show the status 
@@ -45,20 +45,15 @@ $(document).ready(function () {
                 $("#startUpP").text('Before we can predict your solar output, you need to enter your Solar ID.  Please the "Solar ID" menu option above to begin.');
             } else {
                 $("#startUpP").text('Getting energy predictions...');
-                getWeatherAndEnergyHist(solarArrayId, undefined, undefined, function(worked) {
+                getWeatherAndEnergyHist(solarArrayId)
 
-                    dataReady = worked;
-
-                    console.log("show table!");
-                    $("#solarTable").css("display", "block");
-                    $("#solarChart").css("display", "none");
-                    $("#startUp").css("display", "none");
-                    google.load("visualization", "1", { packages: ["corechart"] });
-                });
             }
         });
 
     }
+
+
+    
 
 
     function getSolarArrayId(callback) {
@@ -71,7 +66,7 @@ $(document).ready(function () {
             callback(solarArrayId2);
         }, function (errorObject) {
             console.log("Errors handled: " + errorObject.code);
-        });  
+        });
     }
 
 

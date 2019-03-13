@@ -7,6 +7,10 @@
     padding: 0px !important;
 }
 
+.modalColor {
+    background-color: lavender !important;
+}
+
 /* Used to prevent the menu from wrapping below this width */
 body {
     min-width: 405px !important;
@@ -16,10 +20,6 @@ body {
 .fixLine{
     padding-left: 15px;
     padding-right: 15px;
-}
-
-#solarChart {
-    display: none;
 }
 
 #solarChartDiv{
@@ -35,6 +35,10 @@ body {
     display: none;
 }
 
+#solarChart {
+    display: none;
+}
+
 .icon {
     width: 25px;
 }
@@ -45,5 +49,9 @@ body {
 
 .tableColor {
     width: 20px;
+}
+
+.page-footer {
+    font-size: 75%;
 }
 
