@@ -27,10 +27,6 @@ body {
     min-height: 450px;
 }
 
-/* #solarTable{
-    display: none;
-} */
-
 #startUp {
     display: none;
 }
@@ -53,9 +49,14 @@ body {
 
 .page-footer {
     font-size: 75%;
+    color: black;
 }
 
 #menuTableChart {
     width: 53px;
+}
+
+a.page-footer:visited {
+    color: black;
 }
 

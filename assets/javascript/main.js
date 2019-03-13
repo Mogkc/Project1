@@ -1,6 +1,3 @@
-
-
-
 //Firebase database for storing the solar array
 // Initialize Firebase
 var config = {
@@ -17,9 +14,13 @@ var database = firebase.database();
 var solarArrayId = "";
 
 
+<<<<<<< HEAD
 /**
  * All the initial loading
  */
+=======
+//all inital loading in here
+>>>>>>> 8fc4ff6680533ee4313a6709f99295afea5e0815
 $(document).ready(function () {
 
     startUp();
@@ -47,7 +48,10 @@ $(document).ready(function () {
 
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8fc4ff6680533ee4313a6709f99295afea5e0815
     function getSolarArrayId(callback) {
         var solarArrayId2 = "";
 
@@ -61,8 +65,6 @@ $(document).ready(function () {
         });
     }
 
-
-
     $('#yourId').on('shown.bs.modal', function () {
         //Puts focus on the solor ID input field
         $('#solarId').focus();
@@ -72,7 +74,6 @@ $(document).ready(function () {
         });
 
     })
-
 
     $(document).on("click", "#menuTableChart", function () {
         if ($("#menuTableChartText").text() === "Chart") {
@@ -99,7 +100,6 @@ $(document).ready(function () {
             startUp();
         }
 
-
         database.ref().once('value', function (snapshot) {
 
             if (snapshot.hasChild("solarId")) {
@@ -120,10 +120,6 @@ $(document).ready(function () {
 
 
     //Charting...
-
-
-    // google.setOnLoadCallback(drawChart1);
-
     function drawChart1() {
 
         var tempData = [];
@@ -137,7 +133,7 @@ $(document).ready(function () {
                 color = '#A9635E'			//same color as our logo
             } else {
                 color = '#04AAE5'			//matches header
-                solarDate.setDate(solarDate.getDate() + 1);
+                solarDate.setDate(solarDate.getDate() + 1);  //fix a weird moment and text date thing
             }
             tempData.push([solarDate, gsolarData[i].powerGenerated, color])
         }
