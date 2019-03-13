@@ -1,3 +1,18 @@
+function finishedCalc(worked) {
+
+    dataReady = worked;
+
+    console.log("show table!");
+    if (dataReady) {
+        $("#solarTable").css("display", "block");
+        $("#solarChart").css("display", "none");
+        $("#startUp").css("display", "none");
+        $(window).scrollTop($("#firstRow").offset().top).scrollLeft($("#firstRow").offset().left);
+        // google.load("visualization", "1", { packages: ["corechart"] });
+    }
+}
+
+
 var generatesOn = {
     //Will be filled by correlatePredictions
 };
@@ -65,7 +80,8 @@ var displayFuture = function (siteID, howManyDays) {
             day.add(1, 'days');
         }
 
-        $(window).scrollTop($("#firstRow").offset().top).scrollLeft($("#firstRow").offset().left);
+        
+        finishedCalc(true);
     }, true);
 }
 
