@@ -44,6 +44,7 @@ $(document).ready(function () {
             if (solarArrayId === "") {
                 $("#startUpP").text('Before we can predict your solar output, you need to enter your Solar ID.  Please the "Solar ID" menu option above to begin.');
             } else {
+                $("#menuTableChartText").text("");
                 $("#startUpP").text('Getting energy predictions...');
                 getWeatherAndEnergyHist(solarArrayId)
 
@@ -85,13 +86,13 @@ $(document).ready(function () {
     $(document).on("click", "#menuTableChart", function () {
         // console.log($(this).text());
 
-        if ($(this).text() === "Chart") {
-            $(this).text("Table");
+        if ($("#menuTableChartText").text() === "Chart") {
+            $("#menuTableChartText").text("Table");
             $("#solarTable").css("display", "none")
             $("#solarChart").css("display", "block")
-        } else {
-            $(this).text("Chart");
             drawChart1();
+        } else {
+            $("#menuTableChartText").text("Chart");
             $("#solarChart").css("display", "none")
             $("#solarTable").css("display", "block")
         }
@@ -138,18 +139,21 @@ $(document).ready(function () {
 
     function drawChart1() {
 
+        console.log(gsolarData);
         var tempData = [];
         var color = '#A9635E';
         tempData.push(['Date', 'Power', { role: 'style' }]);
         for (var i = 0; i < gsolarData.length; i++) {
 
+            console.log(gsolarData[i].date);
             var solarDate = new Date(moment.utc(gsolarData[i].date));
 
-            if (solarDate > moment()) {		//If in the future make the color of the bar red
+            if (solarDate >= moment().subtract(1, "days")) {		//If in the future make the color of the bar red
                 color = '#A9635E'			//same color as our logo
             } else {
-                color = '#E6E6FA'			//matches header
+                color = '#04AAE5'			//matches header
             }
+            console.log(solarDate,gsolarData[i].powerGenerated, color)
             tempData.push([solarDate, gsolarData[i].powerGenerated, color])
         }
 
