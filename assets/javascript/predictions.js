@@ -8,7 +8,8 @@ function finishedCalc(worked) {
         $("#solarChart").css("display", "none");
         $("#startUp").css("display", "none");
         $(window).scrollTop($("#firstRow").offset().top).scrollLeft($("#firstRow").offset().left);
-        // google.load("visualization", "1", { packages: ["corechart"] });
+        google.load("visualization", "1", { packages: ["corechart"] });
+        $("#menuTableChartText").text("Chart");
     }
 }
 
@@ -34,6 +35,8 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
         startDate = moment().subtract(30, 'days');
     }
     getProductionHistory(siteID, startDate.format("X"), endDate.format("X"), function (prodHist) {
+        //Make array for use in chart public
+        gsolarData = prodHist;
         showWeather(siteID, startDate.format("X"), endDate.format("X"), function (weathHist) {
             correlateProduction(prodHist, weathHist, function () {
                 //loop through them creating table rows for historical data
