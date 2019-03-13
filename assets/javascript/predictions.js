@@ -80,6 +80,12 @@ var displayFuture = function (siteID, howManyDays) {
             }
             //Update the table
             displayRow(day, prediction.icon, prediction.summary, generated);
+            //Add the futre day to gsolarData for the chart
+            var thisDaysData = {
+                date: day.clone(),
+                powerGenerated: generated
+            }
+            gsolarData.push(thisDaysData);
             day.add(1, 'days');
         }
 
