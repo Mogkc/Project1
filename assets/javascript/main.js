@@ -14,7 +14,9 @@ var database = firebase.database();
 var solarArrayId = "";
 
 
-//all inital loading in here
+/**
+ * All the initial loading
+ */
 $(document).ready(function () {
 
     startUp();
@@ -66,7 +68,6 @@ $(document).ready(function () {
     })
 
     $(document).on("click", "#menuTableChart", function () {
-
         if ($("#menuTableChartText").text() === "Chart") {
             $("#menuTableChartText").text("Table");
             $("#solarTable").css("display", "none")
@@ -78,8 +79,6 @@ $(document).ready(function () {
             $("#solarTable").css("display", "block")
         }
     })
-
-
 
 
     //Save Solar ID
@@ -151,33 +150,4 @@ $(document).ready(function () {
     })
 
     //end charting...
-
-
-
-
-
-
 })
-
-
-
-
-// var EndDate = moment().format();
-// var StartDate = moment(EndDate).subtract(14, "days");
-// console.log("StartDate = " + StartDate + " EndDate = " + EndDate);
-
-// getProductionHistory("961882", moment(StartDate).unix(), moment(EndDate).unix(), function(solarData) {
-
-//     // getProductionHistory("961882", 1546329600, 1552032000, function(solarData) {
-//     console.log("From getProductionHistory callback ");
-//     console.log(solarData);
-//     gsolarData = solarData;
-
-//     // google.charts.load('current', {'packages':['corechart']});     
-
-//     // google.charts.setOnLoadCallback(drawChart);
-
-
-
-// });
-

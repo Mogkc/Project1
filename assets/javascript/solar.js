@@ -1,20 +1,28 @@
 // SOLAR API
 // This component uses the SolarEdge API - https://www.solaredge.com/sites/default/files/se_monitoring_api.pdf
-//
 
+//Global variables that will hold relevant solar data
+var gsolarData;
+var dataReady = false;
 
 var apiKey = "Z9OV01B8GW40QM4DE8N1NM11M33S83MG";
 
+/**
+ * Builds a url that can interface with the Solar API with ajax
+ * @param {string} siteID The id of the location
+ * @param {string} command The command to give to the API
+ */
 function buildURL(siteID, command) {
-
     var rslt = "https://cors-anywhere.herokuapp.com/https://monitoringapi.solaredge.com/site/" + siteID + "/" + command + "api_key=" + apiKey;
-    //console.log(rslt);
     return rslt;
 }
 
 
-// GET SITE INFORMATION
-// -------------------------------------------------------------------------------------------
+/**
+ * Gets the information for a particular location, and passes it to a callback function
+ * @param {string} siteID The id of the location
+ * @param {function} callback A function that recieves and uses the site info
+ */
 function getSiteInfo(siteID, callback) {
 
     var rslt = {
@@ -30,7 +38,6 @@ function getSiteInfo(siteID, callback) {
       method: "GET"
     }).then(function(response) {  
 
-        //console.log(response);
         rslt.zip            =  response.details.location.zip;
         rslt.streetAddress  =  response.details.location.address;       
         rslt.streetState    =  response.details.location.state;     
@@ -42,22 +49,20 @@ function getSiteInfo(siteID, callback) {
             url: queryURL,
             method: "GET"
           }).then(function(response) {  
-      
-              //console.log(response);
-      
               rslt.lastUpdateTime =  response.overview.lastUpdateTime;
               rslt.currentPower   =  response.overview.currentPower.power;
-
-              //console.log(rslt);
-
-              callback(rslt);
           });
     });
 }
 
 
-// GET PRODUCTION HISTORY
-// -------------------------------------------------------------------------------------------
+/**
+ * Gets the production history of a particular location over a date range
+ * @param {string} siteID The ID of the location
+ * @param {string} startDateUnix The unix code for the starting time
+ * @param {string} endDateUnix The unix code for the end time
+ * @param {function} callback A function that recieves and uses the result
+ */
 function getProductionHistory(siteID, startDateUnix, endDateUnix , callback) {
 
     var rslt = [];
@@ -81,8 +86,6 @@ function getProductionHistory(siteID, startDateUnix, endDateUnix , callback) {
       method: "GET"
     }).then(function(response) {  
 
-       // console.log(response);
-
         for(let i=0; i<response.energy.values.length; i++)
         {
             var datestr = response.energy.values[i].date;
@@ -94,9 +97,8 @@ function getProductionHistory(siteID, startDateUnix, endDateUnix , callback) {
                         dateUnix : dateUnix,
                         powerGenerated : response.energy.values[i].value });
         }
-        //console.log("From ajax call " + rslt);
-        callback(rslt);
-        
+
+        callback(rslt);        
     }); 
 
 }
