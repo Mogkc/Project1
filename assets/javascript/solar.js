@@ -51,6 +51,7 @@ function getSiteInfo(siteID, callback) {
           }).then(function(response) {  
               rslt.lastUpdateTime =  response.overview.lastUpdateTime;
               rslt.currentPower   =  response.overview.currentPower.power;
+              callback(rslt);
           });
     });
 }
