@@ -64,6 +64,8 @@ var displayFuture = function (siteID, howManyDays) {
             displayRow(day, prediction.icon, prediction.summary, generated);
             day.add(1, 'days');
         }
+
+        $(window).scrollTop($("#firstRow").offset().top).scrollLeft($("#firstRow").offset().left);
     }, true);
 }
 

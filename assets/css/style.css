@@ -1,9 +1,10 @@
 #logo {
-    width: 300px;
+    width: 250px;
 }
 
 .navbarColor {
     background-color: lavender !important;
+    padding: 0px !important;
 }
 
 /* Used to prevent the menu from wrapping below this width */
@@ -37,3 +38,12 @@ body {
 .icon {
     width: 25px;
 }
+
+#solarTable, #solarChart, #startUp {
+    margin-top: 58px;
+}
+
+.tableColor {
+    width: 20px;
+}
+
