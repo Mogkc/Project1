@@ -19,6 +19,8 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
         startDate = moment().subtract(30, 'days');
     }
     getProductionHistory(siteID, startDate.format("X"), endDate.format("X"), function (prodHist) {
+        //Make solar data availible globally for use in chart.
+        gsolarData = prodHist;
         showWeather(siteID, startDate.format("X"), endDate.format("X"), function (weathHist) {
             correlateProduction(prodHist, weathHist, function () {
                 //loop through them creating table rows for historical data
@@ -62,10 +64,16 @@ var displayFuture = function (siteID, howManyDays) {
             }
             //Update the table
             displayRow(day, prediction.icon, prediction.summary, generated);
+            //Add the futre day to gsolarData for the chart
+            var thisDaysData = {
+                date: day,
+                powerGenerated: generated
+            }
             day.add(1, 'days');
         }
 
         $(window).scrollTop($("#firstRow").offset().top).scrollLeft($("#firstRow").offset().left);
+        finishedCalc(true);
     }, true);
 }
 
