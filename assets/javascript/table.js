@@ -13,8 +13,7 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     dispCol.attr("scope", "row");
     var tableColor = ""
     if (date < moment().subtract(1, "days")) {
-        //tableColor = '#E6E6FA'
-        tableColor = "#5252c7";
+        tableColor = '#A9635E'
         energy = energy.toLocaleString();
     } else {
         tableColor = '#A9635E';
