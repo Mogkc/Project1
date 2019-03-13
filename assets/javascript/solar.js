@@ -1,8 +1,9 @@
 // SOLAR API
 // This component uses the SolarEdge API - https://www.solaredge.com/sites/default/files/se_monitoring_api.pdf
 
-//Global variable that will hold relevant solar data
+//Global variables that will hold relevant solar data
 var gsolarData;
+var dataReady = false;
 
 var apiKey = "Z9OV01B8GW40QM4DE8N1NM11M33S83MG";
 
@@ -96,7 +97,7 @@ function getProductionHistory(siteID, startDateUnix, endDateUnix , callback) {
                         dateUnix : dateUnix,
                         powerGenerated : response.energy.values[i].value });
         }
-        
+
         callback(rslt);        
     }); 
 

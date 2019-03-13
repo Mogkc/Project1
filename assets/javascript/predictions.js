@@ -3,6 +3,10 @@
  * @param {boolean} worked False if there was an error getting data from APIs
  */
 function finishedCalc(worked) {
+
+    //Update the global variable
+    dataReady = worked;
+
     if (worked) {
         $("#solarTable").css("display", "block");
         $("#solarChart").css("display", "none");

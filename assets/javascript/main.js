@@ -14,13 +14,9 @@ var database = firebase.database();
 var solarArrayId = "";
 
 
-<<<<<<< HEAD
 /**
  * All the initial loading
  */
-=======
-//all inital loading in here
->>>>>>> 8fc4ff6680533ee4313a6709f99295afea5e0815
 $(document).ready(function () {
 
     startUp();
@@ -48,10 +44,6 @@ $(document).ready(function () {
 
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8fc4ff6680533ee4313a6709f99295afea5e0815
     function getSolarArrayId(callback) {
         var solarArrayId2 = "";
 
