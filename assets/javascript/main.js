@@ -16,19 +16,13 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var solarArrayId = "";
 
-//Required with Bootstrap for the popover on the weather to work
-// $(function () {
-//     $('[data-toggle="popover"]').popover()
-// })
 
-
-//all inital loading in here
+/**
+ * All the initial loading
+ */
 $(document).ready(function () {
 
     startUp();
-    // getWeatherAndEnergyHist(undefined, undefined, undefined, function () {
-    //     console.log("Reached callback");
-    // });
 
     function startUp() {
         //Show the status 
@@ -52,9 +46,6 @@ $(document).ready(function () {
         });
 
     }
-
-
-    
 
 
     function getSolarArrayId(callback) {
@@ -84,8 +75,6 @@ $(document).ready(function () {
 
 
     $(document).on("click", "#menuTableChart", function () {
-        // console.log($(this).text());
-
         if ($("#menuTableChartText").text() === "Chart") {
             $("#menuTableChartText").text("Table");
             $("#solarTable").css("display", "none")
@@ -97,8 +86,6 @@ $(document).ready(function () {
             $("#solarTable").css("display", "block")
         }
     })
-
-
 
 
     //Save Solar ID
@@ -139,13 +126,11 @@ $(document).ready(function () {
 
     function drawChart1() {
 
-        console.log(gsolarData);
         var tempData = [];
         var color = '#A9635E';
         tempData.push(['Date', 'Power', { role: 'style' }]);
         for (var i = 0; i < gsolarData.length; i++) {
 
-            console.log(gsolarData[i].date);
             var solarDate = new Date(moment.utc(gsolarData[i].date));
 
             if (solarDate >= moment().subtract(1, "days")) {		//If in the future make the color of the bar red
@@ -154,7 +139,6 @@ $(document).ready(function () {
                 color = '#04AAE5'			//matches header
                 solarDate.setDate(solarDate.getDate() + 1);
             }
-            console.log(solarDate,gsolarData[i].powerGenerated, color)
             tempData.push([solarDate, gsolarData[i].powerGenerated, color])
         }
 
@@ -178,33 +162,4 @@ $(document).ready(function () {
     })
 
     //end charting...
-
-
-
-
-
-
 })
-
-
-
-
-// var EndDate = moment().format();
-// var StartDate = moment(EndDate).subtract(14, "days");
-// console.log("StartDate = " + StartDate + " EndDate = " + EndDate);
-
-// getProductionHistory("961882", moment(StartDate).unix(), moment(EndDate).unix(), function(solarData) {
-
-//     // getProductionHistory("961882", 1546329600, 1552032000, function(solarData) {
-//     console.log("From getProductionHistory callback ");
-//     console.log(solarData);
-//     gsolarData = solarData;
-
-//     // google.charts.load('current', {'packages':['corechart']});     
-
-//     // google.charts.setOnLoadCallback(drawChart);
-
-
-
-// });
-
