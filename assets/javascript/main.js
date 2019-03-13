@@ -152,6 +152,7 @@ $(document).ready(function () {
                 color = '#A9635E'			//same color as our logo
             } else {
                 color = '#04AAE5'			//matches header
+                solarDate.setDate(solarDate.getDate() + 1);
             }
             console.log(solarDate,gsolarData[i].powerGenerated, color)
             tempData.push([solarDate, gsolarData[i].powerGenerated, color])
