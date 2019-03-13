@@ -52,7 +52,6 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     img.attr("class", "icon");
     img.attr("src", "assets/images/weather/" + weatherPic + ".png");
     button.append(img);
-    //dispWeath.append(button.popover());
     dispWeath.append(button.popover({
         html: true
     }));
