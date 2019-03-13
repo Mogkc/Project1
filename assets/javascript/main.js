@@ -1,6 +1,3 @@
-
-
-
 //Firebase database for storing the solar array
 // Initialize Firebase
 var config = {
@@ -16,19 +13,11 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var solarArrayId = "";
 
-//Required with Bootstrap for the popover on the weather to work
-// $(function () {
-//     $('[data-toggle="popover"]').popover()
-// })
-
 
 //all inital loading in here
 $(document).ready(function () {
 
     startUp();
-    // getWeatherAndEnergyHist(undefined, undefined, undefined, function () {
-    //     console.log("Reached callback");
-    // });
 
     function startUp() {
         //Show the status 
@@ -53,10 +42,6 @@ $(document).ready(function () {
 
     }
 
-
-    
-
-
     function getSolarArrayId(callback) {
         var solarArrayId2 = "";
 
@@ -70,8 +55,6 @@ $(document).ready(function () {
         });
     }
 
-
-
     $('#yourId').on('shown.bs.modal', function () {
         //Puts focus on the solor ID input field
         $('#solarId').focus();
@@ -82,9 +65,7 @@ $(document).ready(function () {
 
     })
 
-
     $(document).on("click", "#menuTableChart", function () {
-        // console.log($(this).text());
 
         if ($("#menuTableChartText").text() === "Chart") {
             $("#menuTableChartText").text("Table");
@@ -112,7 +93,6 @@ $(document).ready(function () {
             startUp();
         }
 
-
         database.ref().once('value', function (snapshot) {
 
             if (snapshot.hasChild("solarId")) {
@@ -133,28 +113,21 @@ $(document).ready(function () {
 
 
     //Charting...
-
-
-    // google.setOnLoadCallback(drawChart1);
-
     function drawChart1() {
 
-        console.log(gsolarData);
         var tempData = [];
         var color = '#A9635E';
         tempData.push(['Date', 'Power', { role: 'style' }]);
         for (var i = 0; i < gsolarData.length; i++) {
 
-            console.log(gsolarData[i].date);
             var solarDate = new Date(moment.utc(gsolarData[i].date));
 
             if (solarDate >= moment().subtract(1, "days")) {		//If in the future make the color of the bar red
                 color = '#A9635E'			//same color as our logo
             } else {
                 color = '#04AAE5'			//matches header
-                solarDate.setDate(solarDate.getDate() + 1);
+                solarDate.setDate(solarDate.getDate() + 1);  //fix a weird moment and text date thing
             }
-            console.log(solarDate,gsolarData[i].powerGenerated, color)
             tempData.push([solarDate, gsolarData[i].powerGenerated, color])
         }
 
