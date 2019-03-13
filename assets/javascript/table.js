@@ -13,13 +13,17 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     dispCol.attr("scope", "row");
     var tableColor = ""
     if (date < moment().subtract(1, "days")) {
-        tableColor = '#E6E6FA'
+        //tableColor = '#E6E6FA'
+        tableColor = "#5252c7";
+        energy = energy.toLocaleString();
     } else {
-        tableColor = '#A9635E'
+        tableColor = '#A9635E';
         if (firstRow) {
             firstRow = false;
             newRow.attr("id","firstRow");
         }
+        energy = energy.toString();
+        energy = "EST "+energy.slice(0, -3) + 'K';
     }
     dispCol.css("background-color",tableColor)
     newRow.append(dispCol);
@@ -55,7 +59,7 @@ var displayRow = function (date, weatherPic, weatherText, energy) {
     //Rightmost element is energy prediction
     var energyDisp = $("<td>");
     energyDisp.attr("class", "text-right");
-    energyDisp.text(energy.toLocaleString());
+    energyDisp.text(energy);
 
     newRow.append(energyDisp);
     //Append the row to the existing table
