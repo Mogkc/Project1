@@ -60,3 +60,13 @@ a.page-footer:visited {
     color: black;
 }
 
+.popOver {
+    width:100%;
+    background-color:lavender;
+}
+
+/* change default css of Bootstrap for popover */
+.popover {
+    width: 100%;
+    text-align: center;
+}

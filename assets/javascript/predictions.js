@@ -46,7 +46,17 @@ var getWeatherAndEnergyHist = function (siteID, endDate, startDate) {
                 //loop through them creating table rows for historical data
                 for (let i = 0; i < prodHist.length; i++) {
                     var day = prodHist[i].date;
-                    displayRow(moment.unix(prodHist[i].dateUnix), weathHist[day].icon, weathHist[day].summary, prodHist[i].powerGenerated);
+                    var weatherText = "<div class='popover'><h3 class='popover-header popOver'>"+weathHist[day].summary+"</h3>";
+                    weatherText +="<div class='popover-body'><div class='row'><div class='col-sm-6'>Max Temp</div>";
+                    weatherText += "<div class='col-sm-6'>"+weathHist[day].tempMax+"F</div></div>";
+                    weatherText += "<div class='row'><div class='col-sm-6'>Min Temp</div>";
+                    weatherText += "<div class='col-sm-6'>"+weathHist[day].tempMin+"F</div></div>";
+                    weatherText +="<div class='row'><div class='col-sm-6'>Humidity</div>";
+                    weatherText += "<div class='col-sm-6'>"+Math.round(weathHist[day].humidity*100)+"%</div></div>";
+                    weatherText += "<div class='row'><div class='col-sm-6'>Wind Speed</div>";
+                    weatherText += "";
+                    weatherText += "<div class='col-sm-6'>"+weathHist[day].windSpeed+" mph</div></div></div>";
+                    displayRow(moment.unix(prodHist[i].dateUnix), weathHist[day].icon, weatherText, prodHist[i].powerGenerated);
                 }
                 displayFuture(siteID);
             });
@@ -128,7 +138,17 @@ var displayFuture = function (siteID, howManyDays) {
                 generated = generatesOn.cloudy;
             }
             //Update the table
-            displayRow(day, prediction.icon, prediction.summary, generated);
+            var weatherText = "<div class='popover'><h3 class='popover-header popOver'>"+prediction.summary+"</h3>";
+            weatherText +="<div class='popover-body'><div class='row'><div class='col-sm-6'>Max Temp</div>";
+            weatherText += "<div class='col-sm-6'>"+prediction.tempMax+"F</div></div>";
+            weatherText += "<div class='row'><div class='col-sm-6'>Min Temp</div>";
+            weatherText += "<div class='col-sm-6'>"+prediction.tempMin+"F</div></div>";
+            weatherText +="<div class='row'><div class='col-sm-6'>Humidity</div>";
+            weatherText += "<div class='col-sm-6'>"+Math.round(prediction.humidity*100)+"%</div></div>";
+            weatherText += "<div class='row'><div class='col-sm-6'>Wind Speed</div>";
+            weatherText += "";
+            weatherText += "<div class='col-sm-6'>"+prediction.windSpeed+" mph</div></div></div>";
+            displayRow(day, prediction.icon, weatherText, generated);
             //Add the futre day to gsolarData for the chart
             var thisDaysData = {
                 date: day.clone(),
