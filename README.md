@@ -1,5 +1,5 @@
 # Solar-Predictor #
-A website that uses weather and solar data from the last month, along with a weekly forcast, to predict the production of SolarEdge solar panels for the next month.
+A [website](https://rm5565.github.io/Project1/) that uses weather and solar data from the last month, along with a weekly forcast, to predict the production of SolarEdge solar panels for the next month.
 ## Built With ##
 This project uses jQuery, SolarEdge API, DarkSky API, and Firebase.
 ## Authors ##
